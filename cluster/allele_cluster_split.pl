@@ -1,14 +1,13 @@
 use strict;
 use warnings;
 
-# 读取A文件，构建基因对哈希表
 our %gene_pairs;
 my $anchors=$ARGV[0];
 my $mcscan=$ARGV[1];
 my $out=$ARGV[2];
 my @GS;
 open(my $file_A, "<", "$anchors") or die "Cannot open A.txt: $!";
-our $count = 0;  # 计数器，用于生成编号
+our $count = 0;  
 while (my $line = <$file_A>) {
     chomp $line;
     my ($gene1, $gene2, $similarity, $distance) = split("\t", $line);
@@ -22,7 +21,6 @@ while (my $line = <$file_A>) {
 }
 close($file_A);
 
-# 读取B文件，处理每一行基因集合
 
 open(my $file_B, "<", "$mcscan") or die "Cannot open B.txt: $!";
 open OUT,">$out";
@@ -30,7 +28,7 @@ my %gene_sets;
 while (my $line = <$file_B>) {
     chomp $line;
     my @genes = split("\t", $line);
-    shift @genes;  # 忽略第一列
+    shift @genes; 
     my $genes_num = scalar @genes;
     if($genes_num == 1){
         $count++;
@@ -72,8 +70,8 @@ sub split_set{
         }
     }
     my @sorted_pairs = sort {
-        $gene_pairs{$a}[1] <=> $gene_pairs{$b}[1] || # 按 distance 正序排序
-        $gene_pairs{$b}[0] <=> $gene_pairs{$a}[0]    # 如果 distance 相同，则按 similarity 倒序排序
+        $gene_pairs{$a}[1] <=> $gene_pairs{$b}[1] || 
+        $gene_pairs{$b}[0] <=> $gene_pairs{$a}[0]    
     } keys %gene_pairs_has;
 
 foreach my $pair (@sorted_pairs) {
