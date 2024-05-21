@@ -1,6 +1,6 @@
-#1.Generate an initial gene set file based on the list of BLAST results (blastp results between any two genomic protein sequences)
-perl allele_cluster.pl blasts.list GS_0.txt mcscan_cluster.log >mcscan_cluster.log
+#1.Generate an initial gene set file (GS_0.txt) based on the list of BLAST results (blastp results between any two genomic protein sequences)
+perl allele_cluster.pl blasts.list GS_0.txt
 #2.Add unclustered genes to the gene set file
 perl get_all_allelepair.pl GS_0.txt all.gene.name.list GS_1.txt
-#3.Extract the final gene set results using the similarity and positional relationships of all genes(all.blast)
+#3.Extract the final gene set results (geneset.txt) using the similarity and positional relationships of all genes(all.blast)
 perl mcscan_cluster_split.pl all.blast GS_1.txt geneset.txt 
